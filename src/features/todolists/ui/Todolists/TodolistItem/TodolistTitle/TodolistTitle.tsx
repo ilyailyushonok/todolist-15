@@ -31,7 +31,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
       <h3>
         <EditableSpan value={title} onChange={changeTodolistTitle} />
       </h3>
-      <IconButton onClick={deleteTodolist} disabled={entityStatus==="loading"}>
+      <IconButton onClick={deleteTodolist} disabled={entityStatus === "loading"}>
         <DeleteIcon />
       </IconButton>
     </div>

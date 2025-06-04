@@ -1,14 +1,14 @@
-import { type ChangeEvent, type KeyboardEvent, useState } from "react"
-import TextField from "@mui/material/TextField"
 import AddBoxIcon from "@mui/icons-material/AddBox"
 import IconButton from "@mui/material/IconButton"
+import TextField from "@mui/material/TextField"
+import { type ChangeEvent, type KeyboardEvent, useState } from "react"
 
 type Props = {
   onCreateItem: (title: string) => void
-  disabled?:boolean
+  disabled?: boolean
 }
 
-export const CreateItemForm = ({disabled=false, onCreateItem }: Props) => {
+export const CreateItemForm = ({ onCreateItem, disabled = false }: Props) => {
   const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 
@@ -42,10 +42,11 @@ export const CreateItemForm = ({disabled=false, onCreateItem }: Props) => {
         size={"small"}
         error={!!error}
         helperText={error}
+        disabled={disabled}
         onChange={changeTitleHandler}
         onKeyDown={createItemOnEnterHandler}
       />
-      <IconButton onClick={createItemHandler} color={"primary"} disabled={disabled} >
+      <IconButton onClick={createItemHandler} color={"primary"} disabled={disabled}>
         <AddBoxIcon />
       </IconButton>
     </div>

@@ -1,8 +1,13 @@
 import { setAppStatusAC } from "@/app/app-slice"
 import type { RootState } from "@/app/store"
+import { ResultCode } from "@/common/enums"
 import { createAppSlice } from "@/common/utils"
+import { handleAppErrors } from "@/common/utils/handleAppErrors.ts"
+import { handleServerErrors } from "@/common/utils/handleServerErrors.ts"
 import { tasksApi } from "@/features/todolists/api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "@/features/todolists/api/tasksApi.types"
+import type { Todolist } from "@/features/todolists/api/todolistsApi.types.ts"
+import type { Task } from "vitest"
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
 
 export const tasksSlice = createAppSlice({
@@ -44,10 +49,15 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }))
           const res = await tasksApi.createTask(payload)
-          dispatch(setAppStatusAC({ status: "succeeded" }))
-          return { task: res.data.data.item }
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return { task: res.data.data.item }
+          } else {
+            handleAppErrors(dispatch, res.data)
+            return rejectWithValue(null)
+          }
         } catch (error) {
-          dispatch(setAppStatusAC({ status: "failed" }))
+          handleServerErrors(dispatch, error)
           return rejectWithValue(null)
         }
       },
