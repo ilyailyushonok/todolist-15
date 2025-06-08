@@ -6,8 +6,6 @@ import { handleAppErrors } from "@/common/utils/handleAppErrors.ts"
 import { handleServerErrors } from "@/common/utils/handleServerErrors.ts"
 import { tasksApi } from "@/features/todolists/api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "@/features/todolists/api/tasksApi.types"
-import type { Todolist } from "@/features/todolists/api/todolistsApi.types.ts"
-import type { Task } from "vitest"
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
 
 export const tasksSlice = createAppSlice({
